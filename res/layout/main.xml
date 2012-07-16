@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <TextView
+        android:id="@+id/network_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/network_provider_text" />
+<TextView
+    android:id="@+id/network_latitude"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/network_latitude"
+    />
+
+<TextView
+    android:id="@+id/network_longitude"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/network_longitude"
+    />
+
+    <TextView
+            android:id="@+id/gps_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gps_provider_text" />
+    <TextView
+            android:id="@+id/gps_latitude"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gps_latitude"
+            />
+
+    <TextView
+            android:id="@+id/gps_longitude"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gps_longitude"
+            />
+
+</LinearLayout>
+

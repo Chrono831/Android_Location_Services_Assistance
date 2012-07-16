@@ -52,9 +52,11 @@ public class MockLocationPaths {
         location = new Location(DEFAULT_PROVIDER);
         clockwise_rotation = true;
         setHeading(CardinalHeading.EAST.heading());
-        setPath(Path.STRAIGHT);
+        //setPath(Path.STRAIGHT);
         setSpeed(DEFAULT_SPEED);
         setSteps(DEFAULT_STEPS);
+        makeStraightPath();
+
     }
 
     public MockLocationPaths(Location start_point, long _steps, double _heading, float _speed) {
@@ -92,7 +94,11 @@ public class MockLocationPaths {
     }
 
     public boolean hasMoreSteps() {
-        return !(path.isEmpty());
+        if (path.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public Location getNextStep() {
@@ -133,7 +139,7 @@ public class MockLocationPaths {
         this.heading = heading % 360.0;
     }
 
-    public long getSteps() { return steps; }
+    public long getSteps() { return path.size(); }
 
     public void setSteps(long steps) {
         if (steps < 1) {

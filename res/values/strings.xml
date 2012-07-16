@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GPS_Tracking_Assignment</string>
+    <string name="location">Hello World, Main</string>
+    <string name="gps_longitude">2.2</string>
+    <string name="gps_latitude">3.3</string>
+    <string name="on_provider_enabled">onProviderEnabled</string>
+    <string name="network_provider_text">Network Provider</string>
+    <string name="gps_provider_text">GPS Provider</string>
+    <string name="network_latitude">0.0</string>
+    <string name="network_longitude">1.1</string>
+</resources>
