@@ -16,7 +16,7 @@ import android.widget.TextView;
  * Date: 7/22/12
  * Time: 8:01 PM
  */
-public class MockLocationActivity extends Activity {
+public class MockLocationActivity extends Activity implements View.OnClickListener {
     private String test_location_provider = LocationManager.GPS_PROVIDER;
     private LocationManager test_location_manager;
 
@@ -30,29 +30,18 @@ public class MockLocationActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //link XML views
         setContentView(R.layout.mock_location);
         linkTextViewsFromXml();
         linkButtonFromXml();
+        //Establish the test location manager
         defineTestLocationManager();
         enableMockListening();
+        //listen to the button to send the signal
+        listenToSendMockButton();
 
-        setButtonAsOnClickListener();
     }
 
-    private void setButtonAsOnClickListener() {
-        try {
-            send_mock_locations.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (v.getId() == R.id.mock_button) {
-                        sendMockLocations();
-                    }
-                }
-            });
-        } catch (Exception e) {
-            Log.e("location", "Error establishing button as click listener : " + e);
-        }
-    }
 
     private void updateTestCoordinates(Location location) {
         Double lat = location.getLatitude();
@@ -64,7 +53,8 @@ public class MockLocationActivity extends Activity {
     private void sendMockLocations() {
         Location location = new LocationBuilder(test_location_provider).latitude(100.0).longitude(50.0).buildLocation();
         LocationLogger logger = new LocationLogger("location");
-        path = new MockLocationPaths(location, 100, 0, 10);
+        //path = new MockLocationPaths(location, 100, 0, 10);
+        path = new MockLocationPaths();
         location_listener = new MockLocationListener("location");
 
         Log.i("location", "Path created with " + path.getSteps() + " step");
@@ -82,6 +72,10 @@ public class MockLocationActivity extends Activity {
 
     private void linkButtonFromXml() {
         send_mock_locations = (Button) findViewById(R.id.send_mock);
+    }
+
+    private void listenToSendMockButton() {
+        send_mock_locations.setOnClickListener(this);
     }
 
     private void linkTextViewsFromXml() {
@@ -111,6 +105,20 @@ public class MockLocationActivity extends Activity {
             Log.e("location", "Error enabling listening to Mock GPS Location : " + e);
         }
     }
+
+    @Override
+    public void onClick(View v) {
+        int button = v.getId();
+        Log.i("location", "Button selected : " + button);
+        switch (button) {
+            case R.id.send_mock:
+                Log.i("location", "Send Mock button selected");
+                sendMockLocations();
+            default:
+                Log.e("location", "Illegal button selected");
+        }
+    }
+
 
     private class MockLocationListener extends SimpleLocationListener {
         public MockLocationListener(String tag) {

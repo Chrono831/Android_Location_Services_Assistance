@@ -2,6 +2,7 @@ package edu.uchicago.cs.dylanphall;
 
 import android.location.Location;
 import android.location.LocationManager;
+import android.util.Log;
 
 import java.util.ArrayDeque;
 
@@ -19,7 +20,7 @@ public class MockLocationPaths {
     // DD.DDDDD
 
     public static final String DEFAULT_PROVIDER = LocationManager.PASSIVE_PROVIDER;
-    public static final long DEFAULT_STEPS = 10;
+    public static final long DEFAULT_STEPS = 100;
     public static final float DEFAULT_SPEED = (float) 5.0;
     public static final double DEGREES_PER_METER = 0.032727;
 
@@ -104,6 +105,7 @@ public class MockLocationPaths {
         Location start = location;
         Location current = start;
         Location previous = current;
+        Log.w("location", "MLP - step : " + steps);
         for(int i = 0; i < steps; i++) {
             double new_latitude = calculateLatitude(previous);
             double new_longitude = calculateLongitude(previous);

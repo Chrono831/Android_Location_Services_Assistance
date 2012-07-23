@@ -46,6 +46,7 @@ public class SimpleLocationListener implements LocationListener {
         _logger.log(location);
     }
 
+
     protected void passiveLocationUpdated(Location location) {
         Log.i(_tag, "Actions to take on location update.");
     }

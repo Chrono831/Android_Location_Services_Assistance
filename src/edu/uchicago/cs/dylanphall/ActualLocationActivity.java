@@ -16,7 +16,7 @@ import android.widget.ToggleButton;
  * Date: 7/22/12
  * Time: 7:58 PM
  */
-public class ActualLocationActivity extends Activity {
+public class ActualLocationActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
     private static final String network_provider = LocationManager.NETWORK_PROVIDER;
     private static final String gps_provider = LocationManager.GPS_PROVIDER;
 
@@ -31,13 +31,17 @@ public class ActualLocationActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Build XML view
         setContentView(R.layout.actual_location);
         linkTextViewsFromXml();
         linkToggleButtonsFromXml();
+        //Listen to locations
         establishLocationListener();
         defineLocationManagers();
+        //Ensure start not listening
+        stopListeningToAll();
 
-        toggleButtonCheckedChangedListener();
+        listenToToggleButtons();        //toggleButtonCheckedChangedListener();
 
     }
 
@@ -91,7 +95,7 @@ public class ActualLocationActivity extends Activity {
 
     public void stopListeningToAll() {
         stopNetworkListening();
-        startGpsListening();
+        stopGpsListening();
     }
 
     public void startListeningToAll() {
@@ -105,7 +109,7 @@ public class ActualLocationActivity extends Activity {
     }
 
     public void stopGpsListening() {
-        Log.i("location", "Not Listening to Actual Network Updates");
+        Log.i("location", "Not Listening to Actual GPS Updates");
         gps_location_manager.removeUpdates(location_listener);
     }
 
@@ -141,6 +145,29 @@ public class ActualLocationActivity extends Activity {
         gps_longitude.setText(lon.toString());
     }
 
+    private void listenToToggleButtons() {
+        network.setOnCheckedChangeListener(this);
+        gps.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        int button = buttonView.getId();
+        if (button == R.id.network_toggle) {
+            if (isChecked) {
+                startNetworkListening();
+            } else {
+                stopNetworkListening();
+            }
+        } else if (button == R.id.gps_toggle) {
+            if (isChecked) {
+                startGpsListening();
+            } else  {
+                stopGpsListening();
+            }
+        }
+    }
+
     private class ActualLocationListener extends SimpleLocationListener {
 
         public ActualLocationListener(String tag) {
@@ -149,13 +176,11 @@ public class ActualLocationActivity extends Activity {
 
         @Override
         protected void gpsLocationUpdated(Location location) {
-            super.gpsLocationUpdated(location);
             updateGpsCoordinates(location);
         }
 
         @Override
         protected void networkLocationUpdated(Location location) {
-            super.networkLocationUpdated(location);
             updateNetworkCoordinates(location);
         }
     }
