@@ -3,6 +3,23 @@ package edu.uchicago.cs.dylanphall;
 import android.location.Location;
 import android.os.Bundle;
 
+/**
+ * Author: Dylan Hall
+ * Email : dylan.p.hall@gmail.com
+ *
+ * Purpose : This class follows the Builder design pattern and is useful for specifying
+ * any number of parameters in any order
+ * Example:
+ *
+ *  Location one = new LocationBuilder(provider).accuracy(acc).latitude(lat).buildLocation();
+ *  Location two = new LocationBuilder(one).longitude(long).speed(spd).buildLocation();
+ *  'one' has provider, accuracy, latitude
+ *  'two' has all of the above and longitude, speed
+ *
+ */
+
+
+
 public class LocationBuilder {
     private Location _location;
 

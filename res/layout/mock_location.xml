@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <TextView
+        android:id="@+id/actual_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Mock Location Providers">
+    </TextView>
+
+    <Button
+        android:id="@+id/send_mock"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Send Mock Locations" />
+
+    <TextView
+        android:id="@+id/gps_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/gps_provider_text" />
+    <TextView
+        android:id="@+id/gps_latitude"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/gps_latitude" />
+    <TextView
+        android:id="@+id/gps_longitude"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/gps_longitude" />
+
+</LinearLayout>
+

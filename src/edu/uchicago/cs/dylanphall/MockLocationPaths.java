@@ -64,7 +64,6 @@ public class MockLocationPaths {
         setSteps(_steps);
         setHeading(_heading);
         setSpeed(_speed);
-
     }
 
     public void setPath(Path _path) {
@@ -94,11 +93,7 @@ public class MockLocationPaths {
     }
 
     public boolean hasMoreSteps() {
-        if (path.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !path.isEmpty();
     }
 
     public Location getNextStep() {

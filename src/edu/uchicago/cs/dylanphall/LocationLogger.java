@@ -1,30 +1,36 @@
 package edu.uchicago.cs.dylanphall;
 
 import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
 
 /**
  * Created with IntelliJ IDEA.
- * User: dylan
+ * User: Dylan Hall
  * Date: 7/22/12
  * Time: 7:13 PM
  */
 public class LocationLogger {
-    Location location;
-    String tag;
+    private Location _location;
+    private String _tag;
 
     public LocationLogger(String tag, Location location) {
-        this.tag = tag;
-        this.location = location;
+        _tag = tag;
+        _location = location;
+    }
+
+    public LocationLogger(String tag) {
+        _tag = tag;
+        _location = new Location(LocationManager.PASSIVE_PROVIDER);
     }
 
     public void log(String tag, Location location) {
-        this.tag = tag;
+        _tag = tag;
         log(location);
     }
 
     public void log(Location location) {
-        this.location = location;
+        _location = location;
         logWithoutUpdate();
     }
 
@@ -33,37 +39,37 @@ public class LocationLogger {
     }
 
     public void logAdvancedFeatureStatus(Location location) {
-        Log.i(tag, "Accuracy  : " + location.hasAccuracy());
-        Log.i(tag, "Altitude  : " + location.hasAltitude());
-        Log.i(tag, "Bearing   : " + location.hasBearing());
-        Log.i(tag, "Speed     : " + location.hasSpeed());
+        Log.i(_tag, "Accuracy  : " + location.hasAccuracy());
+        Log.i(_tag, "Altitude  : " + location.hasAltitude());
+        Log.i(_tag, "Bearing   : " + location.hasBearing());
+        Log.i(_tag, "Speed     : " + location.hasSpeed());
 
     }
 
     protected void makeEntry() {
-        Log.i(tag, "Provider  : " + location.getProvider());
-        Log.i(tag, "Latitude  : " + location.getLatitude());
-        Log.i(tag, "Longitude : " + location.getLongitude());
-        Log.i(tag, "Accuracy  : " + location.getAccuracy());
-        Log.i(tag, "Altitude  : " + location.getAltitude());
-        Log.i(tag, "Bearing   : " + location.getBearing());
-        Log.i(tag, "Speed     : " + location.getSpeed());
-        Log.i(tag, "Time      : " + location.getTime());
+        Log.i(_tag, "Provider  : " + _location.getProvider());
+        Log.i(_tag, "Latitude  : " + _location.getLatitude());
+        Log.i(_tag, "Longitude : " + _location.getLongitude());
+        Log.i(_tag, "Accuracy  : " + _location.getAccuracy());
+        Log.i(_tag, "Altitude  : " + _location.getAltitude());
+        Log.i(_tag, "Bearing   : " + _location.getBearing());
+        Log.i(_tag, "Speed     : " + _location.getSpeed());
+        Log.i(_tag, "Time      : " + _location.getTime());
     }
 
     public Location getLocation() {
-        return location;
+        return _location;
     }
 
     public void setLocation(Location location) {
-        this.location = location;
+        _location = location;
     }
 
     public String getTag() {
-        return tag;
+        return _tag;
     }
 
     public void setTag(String tag) {
-        this.tag = tag;
+        _tag = tag;
     }
 }
