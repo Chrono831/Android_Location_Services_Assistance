@@ -6,12 +6,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class Main extends Activity implements LocationListener {
 
@@ -53,18 +55,24 @@ public class Main extends Activity implements LocationListener {
         MockLocationPaths test = new MockLocationPaths();
         Log.i(this.getPackageName(), "test path created, steps = " + test.getSteps());
         while (test.hasMoreSteps()) {
+            Long milliseconds = new Long(500);
+            AsyncTask<Long, Void, Boolean> p = new Pause().execute(milliseconds);
+             //TODO make it wait correctly
             try {
-                Thread.sleep(1000);
+                if (p.get()) {
+                    Location l = test.getNextStep();
+                    Log.i(this.getPackageName(), "lat : " + l.getLatitude() + "| lon : " + l.getLongitude());
+                    test_location_manager.setTestProviderLocation(test_location_provider, l);
+                    this.onLocationChanged(l); //Force it to be called
+                    //this.logLocationStatus(l);
+                    //this.updateGpsLocation(l);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            } //TODO make it wait correctly
+            } catch (ExecutionException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
 
-            Location l = test.getNextStep();
-            Log.i(this.getPackageName(), "lat : " + l.getLatitude() + "| lon : " + l.getLongitude());
-            test_location_manager.setTestProviderLocation(test_location_provider, l);
-            this.onLocationChanged(l); //Force it to be called
-            //this.logLocationStatus(l);
-            //this.updateGpsLocation(l);
         }
 
         //runTest();
@@ -147,5 +155,21 @@ public class Main extends Activity implements LocationListener {
     public void onProviderDisabled(String provider) {
         Log.i(this.getPackageName(), provider + " Disabled");
     }
+
+    private class Pause extends AsyncTask<Long, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Long... params) {
+           try {
+               long sleep_time = params[0];
+               Log.i(getPackageName(), "Sleeping for " + sleep_time + "ms");
+               Thread.sleep(sleep_time);
+               return true;
+           } catch (InterruptedException e) {
+               Log.e("dph", "Exception while sleeping :" + e);
+           }
+            return false;
+        }
+    }
+
 }
 
