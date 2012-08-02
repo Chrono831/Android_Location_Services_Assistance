@@ -49,33 +49,6 @@ public class ActualLocationActivity extends Activity implements CompoundButton.O
         location_listener = new ActualLocationListener("location");
     }
 
-    private void toggleButtonCheckedChangedListener() {
-        try {
-            network.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        startNetworkListening();
-                    } else {
-                        stopNetworkListening();
-                    }
-                }
-            });
-            gps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        startGpsListening();
-                    } else {
-                        stopGpsListening();
-                    }
-                }
-            });
-        } catch (Exception e) {
-            Log.e("location", "Error establishing switches as checked listeners : " + e);
-        }
-    }
-
     private void linkToggleButtonsFromXml() {
         network = (ToggleButton) findViewById(R.id.network_toggle);
         gps = (ToggleButton) findViewById(R.id.gps_toggle);
@@ -115,8 +88,8 @@ public class ActualLocationActivity extends Activity implements CompoundButton.O
 
     private void startNetworkListening() {
         try {
-        Log.i("location", "Listening to Actual Network Updates");
-        network_location_manager.requestLocationUpdates(network_provider, 0, 0, location_listener);
+            Log.i("location", "Listening to Actual Network Updates");
+            network_location_manager.requestLocationUpdates(network_provider, 0, 0, location_listener);
         } catch (Exception e) {
             Log.e("location", "Error starting to listen to Network Location : " + e);
         }
@@ -162,7 +135,7 @@ public class ActualLocationActivity extends Activity implements CompoundButton.O
         } else if (button == R.id.gps_toggle) {
             if (isChecked) {
                 startGpsListening();
-            } else  {
+            } else {
                 stopGpsListening();
             }
         }
